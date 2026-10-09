@@ -49,16 +49,20 @@ API_HASH=sizning_api_hash_kodingiz
 *(Qo'shimcha tarzda `config.py` faylidan mijozlarga boradigan matnlarni o'zgartirishingiz mumkin).*
 
 ### 3-qadam: Tizimni ishga tushirish
+*(Birinchi marta botni o'zingizning Telegram akkauntingizga ulash uchun QR-kod orqali bitta login qilib olasiz. Buning uchun terminalda quyidagicha yozing):*
+```bash
+python -m bot.qr_login
+```
+
 Tizim to'liq ishlashi uchun 2 ta terminal (konsol) kerak bo'ladi:
 
 **Botni ishga tushirish (1-terminal):**
 ```bash
-python main_bot.py
+python -m bot.main_bot
 ```
-*(Birinchi marta ishga tushganida sizdan telefon raqam va kod so'rashi yoki QR-kod berishi mumkin, shundan so'ng tizim ulanadi).*
 
 **Veb panelni ishga tushirish (2-terminal):**
 ```bash
-python api.py
+python -m api.api
 ```
 Shundan so'ng brauzer orqali **`http://127.0.0.1:8080`** manziliga kirsangiz, boshqaruv paneli ishga tushadi!
