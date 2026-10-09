@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UserBot Admin Panel</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: sans-serif; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        .pulse-red { animation: pulse 2s infinite; }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-50 p-6 md:p-12 text-gray-800">
+
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <header class="flex justify-between items-center mb-10">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-900">O'quv Markazi Dashboard</h1>
+                <p class="text-gray-500 mt-1">UserBot monitoringi</p>
+            </div>
+            <div class="flex items-center space-x-2">
+                <span class="text-sm font-medium text-green-600">Tizim faol (Jonli)</span>
+            </div>
+        </header>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+            <!-- Total Users -->
+            <div class="glass-card p-6">
+                <p class="text-sm font-medium text-gray-500">Jami murojaatlar</p>
+                <h2 class="text-4xl font-bold text-gray-900 mt-2" id="total_clients">0</h2>
+                <p class="text-xs text-gray-400 mt-2">Bot orqali ma'lumot olgan mijozlar</p>
+            </div>
+
+            <!-- Waiting Users -->
+            <div class="glass-card p-6" id="waiting_card">
+                <p class="text-sm font-medium text-gray-500">Kutayotgan Mijozlar</p>
+                <h2 class="text-4xl font-bold text-red-600 mt-2" id="waiting_clients">0</h2>
+                <p class="text-xs text-gray-400 mt-2">Operator javobiga muhtoj</p>
+            </div>
+        </div>
+
+        <!-- Waiting List -->
+        <div class="glass-card p-8">
+            <h3 class="text-xl font-bold text-gray-900 mb-6">Javob kutilayotgan mijozlar</h3>
+            <div id="waiting_list_container" class="space-y-3">
+                <p class="text-sm text-gray-500 italic">Yuklanmoqda...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS Script -->
+    <script>
+        function fetchStats() {
+            // API ga so'rov yuborish
+            fetch('/api/stats')
+                .then(function(response) {
+                    if (!response.ok) { throw new Error("HTTP error " + response.status); }
+                    return response.json();
+                })
+                .then(function(data) {
+                    // Update texts
+                    document.getElementById('total_clients').innerText = data.total_clients || 0;
+                    document.getElementById('waiting_clients').innerText = data.waiting_clients || 0;
+                    
+                    // Pulse animation
+                    var waitingCard = document.getElementById('waiting_card');
+                    if(data.waiting_clients > 0) {
+                        waitingCard.classList.add('pulse-red');
+                    } else {
+                        waitingCard.classList.remove('pulse-red');
+                    }
+
+                    // Update List container
+                    var container = document.getElementById('waiting_list_container');
+                    if (data.waiting_clients === 0) {
+                        container.innerHTML = '<p class="text-sm text-gray-500 italic">Hozircha hamma mijozlarga javob berilgan. Kutayotganlar yo\'q 🎉</p>';
+                    } else {
+                        var htmlContent = '';
+                        var entries = Object.entries(data.waiting_list || {});
+                        
+                        for (var i = 0; i < entries.length; i++) {
+                            var userId = entries[i][0];
+                            var timeStr = new Date(entries[i][1]).toLocaleTimeString('uz-UZ');
+                            
+                            htmlContent += '<div class="flex items-center justify-between p-4 bg-red-50 rounded-lg border border-red-100">';
+                            htmlContent += '<span class="font-medium">Mijoz ID: ' + userId + '</span>';
+                            htmlContent += '<span class="text-sm text-red-600">Vaqt: ' + timeStr + '</span>';
+                            htmlContent += '</div>';
+                        }
+                        container.innerHTML = htmlContent;
+                    }
+                })
+                .catch(function(error) {
+                    console.error("Fetch xatosi:", error);
+                });
+        }
+
+        // Dastlabki yuklash
+        fetchStats();
+        // Har 2 soniyada qayta yuklash
+        setInterval(fetchStats, 2000);
+    </script>
+</body>
+</html>

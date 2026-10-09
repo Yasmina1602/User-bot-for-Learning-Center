@@ -1,0 +1,18 @@
+# Python virtual muhitlari
+venv/
+env/
+__pycache__/
+
+# Maxfiy konfiguratsiyalar
+.env
+
+# Telegram sessiya fayllari (Bularni GitHubga umuman yuklash mumkin emas!)
+*.session
+*.session-journal
+*.session-wal
+*.session.lock
+
+# Test bazasi va vaqtinchalik ma'lumotlar
+clients_data.json
+*.png
+*.jpg
