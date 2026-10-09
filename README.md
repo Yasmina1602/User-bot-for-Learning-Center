@@ -9,6 +9,8 @@ Loyiha shaxsiy Telegram akkaunt orqali **UserBot** (Telethon) tarzida ishlaydi h
 * **Avto-Javob:** Telegram orqali `/start` bosgan yoki umuman birinchi marta yozgan mijozlarga markaz haqida to'liq ma'lumotli tanishtiruv xabari yuboriladi.
 * **Kutish xabari:** Mijoz javob kutayotgan vaqtda qayta yozsa, *"Kutib turing, operatorlarimiz band"* kabi xabar avtomatik yuboriladi.
 * **Vaqtni nazorat qilish (Taymer):** Mijoz yozganidan so'ng belgilangan vaqt (masalan 60 soniya) ichida operator javob bermasa, Adminga *"Mijozga o'z vaqtida javob berilmadi!"* degan ogohlantirish keladi.
+![Ogohlantirish Xabari](image/ogohlantirish.png)
+
 * **Veb Boshqaruv Paneli (Dashboard):** Adminlar maxsus web-sahifa orqali jonli efirda (Live) qancha mijoz murojaat qilganini va nechta mijoz ayni paytda javob kutayotganini ko'rib turadilar.
 
 ---
@@ -23,7 +25,7 @@ Hozirgi tizim 2 ta asosiy qatlamdan tashkil topgan:
 ## 3. Web Dashboard (Interfeys)
 Quyida loyihaning Veb-interfeysi (Dashboard) qanday ishlashi ko'rsatilgan:
 
-![Web Dashboard](image/screenshot.png)
+![Web Dashboard](image/web_interfeys.png)
 
 **Dashboard orqali siz qila olasiz:**
 * **Jami murojaatlar sonini ko'rish:** Loyiha ishga tushganidan buyon bot orqali nechta odamga avto-javob borganligini aniqlash.
